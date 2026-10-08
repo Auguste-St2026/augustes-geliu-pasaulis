@@ -1,0 +1,1042 @@
+<!DOCTYPE html>
+<html lang="lt" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Augustės S. "Gėlių Pasaulis" - Prabangus Gėlių Salonas</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Playfair Display (serif) and Plus Jakarta Sans (sans-serif) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..700;1,400..700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#fdf8f6',
+                            100: '#fbeee9',
+                            200: '#f5dcd3',
+                            300: '#eac0b1',
+                            400: '#df9982',
+                            500: '#c5745b',
+                            600: '#ab5d45',
+                            700: '#8f4a36',
+                            800: '#753c2d',
+                            900: '#603327',
+                        },
+                        emerald: {
+                            50: '#f0fdf4',
+                            800: '#166534',
+                            900: '#14532d',
+                            950: '#052e16',
+                        },
+                        cream: '#FAF7F2',
+                        blush: '#F7EBE8'
+                    },
+                    fontFamily: {
+                        serif: ['"Playfair Display"', 'serif'],
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #FAF7F2;
+            color: #2D2421;
+        }
+        h1, h2, h3, h4, .font-serif {
+            font-family: 'Playfair Display', serif;
+        }
+        .glass-nav {
+            background: rgba(250, 247, 242, 0.85);
+            backdrop-filter: blur(12px);
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #FAF7F2;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #eac0b1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #c5745b;
+        }
+    </style>
+</head>
+<body class="bg-cream min-h-screen flex flex-col selection:bg-brand-200 selection:text-brand-900">
+
+    <!-- Navbar -->
+    <header class="fixed top-0 left-0 right-0 z-50 glass-nav border-b border-brand-200/50 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <a href="#home" onclick="switchTab('home')" class="flex items-center space-x-3 group">
+                <div class="w-10 h-10 rounded-full bg-brand-800 text-cream flex items-center justify-center font-serif text-xl shadow-md group-hover:bg-brand-700 transition">
+                    A
+                </div>
+                <div>
+                    <span class="font-serif text-xl sm:text-2xl font-bold tracking-wide text-brand-900 block leading-none">Augustės S.</span>
+                    <span class="text-xs uppercase tracking-widest text-brand-600 font-semibold">Gėlių Pasaulis</span>
+                </div>
+            </a>
+            
+            <!-- Desktop Navigation -->
+            <nav class="hidden md:flex items-center space-x-8">
+                <button onclick="switchTab('home')" id="nav-home" class="nav-btn text-brand-900 font-medium hover:text-brand-600 transition pb-1 border-b-2 border-brand-800">Pradinis</button>
+                <button onclick="switchTab('catalog')" id="nav-catalog" class="nav-btn text-brand-700/80 font-medium hover:text-brand-600 transition pb-1 border-b-2 border-transparent">Katalogas</button>
+                <button onclick="switchTab('tips')" id="nav-tips" class="nav-btn text-brand-700/80 font-medium hover:text-brand-600 transition pb-1 border-b-2 border-transparent">Naudingi Patarimai</button>
+                <button onclick="switchTab('about')" id="nav-about" class="nav-btn text-brand-700/80 font-medium hover:text-brand-600 transition pb-1 border-b-2 border-transparent">Apie Mus & Kontaktai</button>
+            </nav>
+
+            <div class="flex items-center space-x-4">
+                <button onclick="openCartModal()" class="relative p-2.5 rounded-full bg-brand-100 text-brand-800 hover:bg-brand-200 transition shadow-sm" aria-label="Krepšelis">
+                    <i class="fa-solid fa-bag-shopping"></i>
+                    <span id="cart-badge" class="absolute -top-1 -right-1 bg-brand-800 text-cream text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center border-2 border-cream">0</span>
+                </button>
+                <!-- Mobile Menu Button -->
+                <button onclick="toggleMobileMenu()" class="md:hidden p-2.5 rounded-full bg-brand-100 text-brand-800 hover:bg-brand-200 transition" aria-label="Meniu">
+                    <i class="fa-solid fa-bars text-lg"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Navigation Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-cream border-b border-brand-200 px-6 py-4 space-y-3 shadow-lg">
+            <button onclick="switchTab('home'); toggleMobileMenu();" class="block w-full text-left py-2 font-medium text-brand-900 hover:text-brand-600">Pradinis</button>
+            <button onclick="switchTab('catalog'); toggleMobileMenu();" class="block w-full text-left py-2 font-medium text-brand-900 hover:text-brand-600">Katalogas</button>
+            <button onclick="switchTab('tips'); toggleMobileMenu();" class="block w-full text-left py-2 font-medium text-brand-900 hover:text-brand-600">Naudingi Patarimai</button>
+            <button onclick="switchTab('about'); toggleMobileMenu();" class="block w-full text-left py-2 font-medium text-brand-900 hover:text-brand-600">Apie Mus & Kontaktai</button>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="flex-grow pt-20">
+
+        <!-- ================= TAB 1: PRADINIS (HOME) ================= -->
+        <div id="view-home" class="tab-content animate-fadeIn">
+            <!-- Hero Section -->
+            <section class="relative min-h-[85vh] flex items-center justify-center bg-gradient-to-b from-brand-100/60 to-cream overflow-hidden py-16 px-4">
+                <div class="absolute inset-0 z-0 opacity-15 bg-[radial-gradient(#8f4a36_1px,transparent_1px)] [background-size:24px_24px]"></div>
+                <div class="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10">
+                    <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
+                        <span class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-brand-200/70 text-brand-800 text-xs sm:text-sm font-semibold tracking-wider uppercase">
+                            <i class="fa-solid fa-spa text-brand-600"></i> Elegancija Jūsų namams ir šventėms
+                        </span>
+                        <h1 class="text-4xl sm:text-6xl lg:text-7xl font-serif font-bold text-brand-900 leading-[1.1]">
+                            Kur gėlės tampa <span class="italic font-normal text-brand-600">meno kūriniais</span>
+                        </h1>
+                        <p class="text-base sm:text-lg text-brand-800/80 max-w-2xl mx-auto lg:mx-0 font-normal">
+                            Sveiki atvykę į Augustės S. „Gėlių Pasaulį“. Čia rasite kruopščiai atrinktas kambarines gėles, prabangias orchidėjas, gyvybingus lauko augalus bei autorines dovanų puokštes kiekvienai progai.
+                        </p>
+                        <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-4">
+                            <button onclick="switchTab('catalog')" class="w-full sm:w-auto px-8 py-4 rounded-full bg-brand-800 text-cream font-semibold hover:bg-brand-700 transition shadow-lg shadow-brand-800/20 flex items-center justify-center gap-3">
+                                <span>Naršyti Katalogą</span>
+                                <i class="fa-solid fa-arrow-right-long"></i>
+                            </button>
+                            <button onclick="switchTab('about')" class="w-full sm:w-auto px-8 py-4 rounded-full bg-brand-200/50 text-brand-900 font-semibold hover:bg-brand-200 transition border border-brand-300">
+                                Susisiekite su mumis
+                            </button>
+                        </div>
+                        <div class="grid grid-cols-3 gap-6 pt-8 border-t border-brand-200/80 max-w-lg mx-auto lg:mx-0">
+                            <div>
+                                <p class="font-serif text-2xl sm:text-3xl font-bold text-brand-900">100%</p>
+                                <p class="text-xs text-brand-700 uppercase tracking-wide">Šviežios gėlės</p>
+                            </div>
+                            <div>
+                                <p class="font-serif text-2xl sm:text-3xl font-bold text-brand-900">50+</p>
+                                <p class="text-xs text-brand-700 uppercase tracking-wide">Augalų rūšių</p>
+                            </div>
+                            <div>
+                                <p class="font-serif text-2xl sm:text-3xl font-bold text-brand-900">24/7</p>
+                                <p class="text-xs text-brand-700 uppercase tracking-wide">Priežiūros gidai</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="lg:col-span-5 relative">
+                        <div class="relative mx-auto max-w-md lg:max-w-none">
+                            <div class="absolute -inset-4 bg-gradient-to-r from-brand-300 to-brand-100 rounded-3xl blur-xl opacity-70 animate-pulse"></div>
+                            <div class="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-cream aspect-[4/5]">
+                                <img src="https://images.unsplash.com/photo-1563245372-f21724e3856d?q=80&w=1000&auto=format&fit=crop" alt="Augustės gėlės" class="w-full h-full object-cover hover:scale-105 transition duration-700">
+                            </div>
+                            <!-- Floating badge -->
+                            <div class="absolute -bottom-6 -left-6 bg-cream/95 backdrop-blur-md p-4 rounded-2xl shadow-xl border border-brand-200 flex items-center space-x-3">
+                                <div class="w-12 h-12 rounded-xl bg-emerald-800 text-white flex items-center justify-center text-xl">
+                                    <i class="fa-solid fa-award"></i>
+                                </div>
+                                <div>
+                                    <p class="text-xs text-gray-500 font-semibold">Kokybės garantija</p>
+                                    <p class="text-sm font-bold text-brand-900">Aukščiausia selekcija</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Populiariausios Gėlės -->
+            <section class="py-20 px-4 max-w-7xl mx-auto">
+                <div class="text-center max-w-2xl mx-auto mb-16 space-y-3">
+                    <span class="text-brand-600 uppercase tracking-widest text-xs font-bold">Mūsų Pasididžiavimas</span>
+                    <h2 class="text-3xl sm:text-5xl font-serif font-bold text-brand-900">Populiariausi Augalai</h2>
+                    <p class="text-brand-800/80">Išsirinkite savo namų žaliąją oazę iš mūsų klientų labiausiai pamėgtų gėlių.</p>
+                </div>
+
+                <div id="featured-flowers-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <!-- Dynamically populated via JavaScript -->
+                </div>
+
+                <div class="text-center mt-12">
+                    <button onclick="switchTab('catalog')" class="px-8 py-3.5 rounded-full bg-brand-100 text-brand-900 font-semibold hover:bg-brand-200 transition border border-brand-300 inline-flex items-center gap-2">
+                        <span>Peržiūrėti visą katalogą</span>
+                        <i class="fa-solid fa-arrow-right text-xs"></i>
+                    </button>
+                </div>
+            </section>
+
+            <!-- Highlights / Why Choose Us -->
+            <section class="bg-brand-100/50 py-20 px-4 border-y border-brand-200/50">
+                <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="bg-cream p-8 rounded-3xl shadow-sm border border-brand-200 text-center space-y-4 hover:shadow-md transition">
+                        <div class="w-16 h-16 mx-auto rounded-2xl bg-brand-200 text-brand-900 flex items-center justify-center text-2xl shadow-inner">
+                            <i class="fa-solid fa-seedling"></i>
+                        </div>
+                        <h3 class="font-serif text-xl font-bold text-brand-900">Ekspertų Priežiūra</h3>
+                        <p class="text-sm text-brand-800/80 leading-relaxed">Prie kiekvieno augalo rasite išsamias instrukcijas: laistymo dažnį, apšvietimo poreikį ir temperatūrą.</p>
+                    </div>
+                    <div class="bg-cream p-8 rounded-3xl shadow-sm border border-brand-200 text-center space-y-4 hover:shadow-md transition">
+                        <div class="w-16 h-16 mx-auto rounded-2xl bg-brand-200 text-brand-900 flex items-center justify-center text-2xl shadow-inner">
+                            <i class="fa-solid fa-truck-fast"></i>
+                        </div>
+                        <h3 class="font-serif text-xl font-bold text-brand-900">Saugus Pristatymas</h3>
+                        <p class="text-sm text-brand-800/80 leading-relaxed">Gėlės supakuojamos ypatingai kruopščiai, kad pasiektų Jūsų namus sveikos, gyvybingos ir nepažeistos.</p>
+                    </div>
+                    <div class="bg-cream p-8 rounded-3xl shadow-sm border border-brand-200 text-center space-y-4 hover:shadow-md transition">
+                        <div class="w-16 h-16 mx-auto rounded-2xl bg-brand-200 text-brand-900 flex items-center justify-center text-2xl shadow-inner">
+                            <i class="fa-solid fa-heart-pulse"></i>
+                        </div>
+                        <h3 class="font-serif text-xl font-bold text-brand-900">Augalų Konsultacijos</h3>
+                        <p class="text-sm text-brand-800/80 leading-relaxed">Augustė S. ir komanda visada pasiruošę patarti, kaip atgaivinti pavargusį augalą ar išsirinkti tinkamiausią.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Atsiliepimai (Testimonials) -->
+            <section class="py-20 px-4 max-w-7xl mx-auto">
+                <div class="text-center max-w-2xl mx-auto mb-16 space-y-3">
+                    <span class="text-brand-600 uppercase tracking-widest text-xs font-bold">Klientų Atsiliepimai</span>
+                    <h2 class="text-3xl sm:text-4xl font-serif font-bold text-brand-900">Ką sako gėlių mylėtojai?</h2>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="bg-white p-8 rounded-3xl shadow-sm border border-brand-200 space-y-4 relative">
+                        <div class="text-brand-400 text-lg flex gap-1">
+                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                        </div>
+                        <p class="text-brand-900/90 italic text-sm">„Užsisakiau karališkąją orchidėją iš Augustės S. salono. Ji tiesiog nuostabi! Augalas atkeliavo labai saugiai supakuotas, žydi jau antrą mėnesį!“</p>
+                        <div class="flex items-center space-x-3 pt-4 border-t border-brand-100">
+                            <div class="w-10 h-10 rounded-full bg-brand-200 flex items-center justify-center font-bold text-brand-800 font-serif">G</div>
+                            <div>
+                                <p class="font-bold text-sm text-brand-900">Gabija M.</p>
+                                <p class="text-xs text-gray-500">Vilnius</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white p-8 rounded-3xl shadow-sm border border-brand-200 space-y-4 relative">
+                        <div class="text-brand-400 text-lg flex gap-1">
+                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                        </div>
+                        <p class="text-brand-900/90 italic text-sm">„Labai patiko svetainėje pateikiami auginimo patarimai. Dėka jų mano monstera pagaliau pradėjo leisti naujus lapus. Ačiū Augustei!“</p>
+                        <div class="flex items-center space-x-3 pt-4 border-t border-brand-100">
+                            <div class="w-10 h-10 rounded-full bg-brand-200 flex items-center justify-center font-bold text-brand-800 font-serif">T</div>
+                            <div>
+                                <p class="font-bold text-sm text-brand-900">Tomas K.</p>
+                                <p class="text-xs text-gray-500">Kaunas</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white p-8 rounded-3xl shadow-sm border border-brand-200 space-y-4 relative">
+                        <div class="text-brand-400 text-lg flex gap-1">
+                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                        </div>
+                        <p class="text-brand-900/90 italic text-sm">„Prabangios puokštės ir nepriekaištingas aptarnavimas. Tai tapo mano mėgstamiausia vieta gėlėms užsakyti.“</p>
+                        <div class="flex items-center space-x-3 pt-4 border-t border-brand-100">
+                            <div class="w-10 h-10 rounded-full bg-brand-200 flex items-center justify-center font-bold text-brand-800 font-serif">E</div>
+                            <div>
+                                <p class="font-bold text-sm text-brand-900">Eglė R.</p>
+                                <p class="text-xs text-gray-500">Klaipėda</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- ================= TAB 2: GĖLIŲ KATALOGAS (CATALOG) ================= -->
+        <div id="view-catalog" class="tab-content hidden animate-fadeIn py-12 px-4 max-w-7xl mx-auto">
+            <div class="text-center max-w-2xl mx-auto mb-12 space-y-3">
+                <span class="text-brand-600 uppercase tracking-widest text-xs font-bold">Gėlių Asortimentas</span>
+                <h1 class="text-3xl sm:text-5xl font-serif font-bold text-brand-900">Augalų Katalogas</h1>
+                <p class="text-brand-800/80">Ieškokite pagal pavadinimą arba filtruokite pagal kategorijas. Spustelėkite ant gėlės norėdami sužinoti išsamią priežiūros informaciją.</p>
+            </div>
+
+            <!-- Search and Filter Bar -->
+            <div class="flex flex-col md:flex-row gap-4 items-center justify-between mb-10 bg-white p-4 rounded-3xl shadow-sm border border-brand-200">
+                <!-- Category Filters -->
+                <div class="flex flex-wrap gap-2 w-full md:w-auto" id="category-filters">
+                    <button onclick="filterCategory('all')" data-cat="all" class="cat-btn px-5 py-2.5 rounded-full text-sm font-semibold transition bg-brand-800 text-cream shadow-sm">Visi</button>
+                    <button onclick="filterCategory('kambarinės')" data-cat="kambarinės" class="cat-btn px-5 py-2.5 rounded-full text-sm font-semibold transition bg-brand-100 text-brand-800 hover:bg-brand-200">Kambarinės</button>
+                    <button onclick="filterCategory('lauko')" data-cat="lauko" class="cat-btn px-5 py-2.5 rounded-full text-sm font-semibold transition bg-brand-100 text-brand-800 hover:bg-brand-200">Lauko</button>
+                    <button onclick="filterCategory('orchidėjos')" data-cat="orchidėjos" class="cat-btn px-5 py-2.5 rounded-full text-sm font-semibold transition bg-brand-100 text-brand-800 hover:bg-brand-200">Orchidėjos</button>
+                    <button onclick="filterCategory('dovanų puokštės')" data-cat="dovanų puokštės" class="cat-btn px-5 py-2.5 rounded-full text-sm font-semibold transition bg-brand-100 text-brand-800 hover:bg-brand-200">Dovanų Puokštės</button>
+                </div>
+                <!-- Search Box -->
+                <div class="relative w-full md:w-72">
+                    <span class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-brand-500">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </span>
+                    <input type="text" id="search-input" oninput="handleSearch(this.value)" placeholder="Ieškoti gėlės..." class="w-full pl-11 pr-4 py-2.5 rounded-full bg-cream border border-brand-200 focus:outline-none focus:border-brand-500 text-sm text-brand-900 placeholder-brand-400">
+                </div>
+            </div>
+
+            <!-- Catalog Grid -->
+            <div id="catalog-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Dynamically populated via JavaScript -->
+            </div>
+
+            <!-- Empty State -->
+            <div id="empty-state" class="hidden text-center py-16 space-y-4">
+                <div class="w-16 h-16 bg-brand-200 rounded-full flex items-center justify-center mx-auto text-brand-800 text-2xl">
+                    <i class="fa-solid fa-face-frown"></i>
+                </div>
+                <h3 class="font-serif text-xl font-bold text-brand-900">Augalų nerasta</h3>
+                <p class="text-brand-700 text-sm">Pabandykite įvesti kitą paieškos žodį arba pasirinkite kitą kategoriją.</p>
+                <button onclick="filterCategory('all'); document.getElementById('search-input').value='';" class="px-6 py-2.5 rounded-full bg-brand-800 text-cream text-sm font-semibold">Išvalyti filtrus</button>
+            </div>
+        </div>
+
+        <!-- ================= TAB 3: NAUDINGI PATARIMAI (TIPS) ================= -->
+        <div id="view-tips" class="tab-content hidden animate-fadeIn py-12 px-4 max-w-7xl mx-auto">
+            <div class="text-center max-w-2xl mx-auto mb-16 space-y-3">
+                <span class="text-brand-600 uppercase tracking-widest text-xs font-bold">Augalų Gidas</span>
+                <h1 class="text-3xl sm:text-5xl font-serif font-bold text-brand-900">Naudingi Patarimai ir Straipsniai</h1>
+                <p class="text-brand-800/80">Sužinokite profesionalių gėlininkų paslaptis, kaip teisingai laistyti, tręšti ir persodinti savo augalus.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <article class="bg-white rounded-3xl overflow-hidden shadow-sm border border-brand-200 flex flex-col group hover:shadow-md transition">
+                    <div class="h-64 overflow-hidden relative">
+                        <img src="https://images.unsplash.com/photo-1512428559087-560fa5ceab42?q=80&w=1000&auto=format&fit=crop" alt="Laistymas" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                        <span class="absolute top-4 left-4 bg-brand-800 text-cream text-xs font-semibold px-3 py-1 rounded-full">Laistymas</span>
+                    </div>
+                    <div class="p-8 space-y-4 flex-grow flex flex-col justify-between">
+                        <div>
+                            <div class="text-xs text-brand-600 font-semibold mb-1"><i class="fa-regular fa-calendar"></i> 2026 m. spalis • 5 min skaitinys</div>
+                            <h2 class="font-serif text-2xl font-bold text-brand-900 mb-3">Kaip teisingai suprasti, kada gėlė nori gerti?</h2>
+                            <p class="text-brand-800/80 text-sm leading-relaxed">Perlaistymas yra viena dažniausių mirtinų klaidų auginant kambarinius augalus. Išmokite paprastą piršto testą ir supraskite drenažo svarbą.</p>
+                        </div>
+                        <button onclick="openTipModal('Laistymo paslaptys', 'Perlaistymas yra pagrindinė kambarių augalų žūties priežastis. Daugelis galvoja, kad gėlę reikia laistyti pagal griežtą grafiką (pvz., kas antradienį), tačiau tai klaida. Žemė skirtingai džiūsta priklausomai nuo kambario temperatūros, oro drėgmės ir vazono dydžio.\\n\\n1. Piršto testas: įkiškite pirštą į žemę per vieną falangą. Jei žemė sausa – laistykite. Jei drėbiasi ir limpa – palaukite dar kelias dienas.\\n2. Vandens temperatūra: naudokite tik kambario temperatūros pastovėtą vandenį.\\n3. Drenažas: vazono dugne BŪTINAI turi būti drenažo anga ir keramzito sluoksnis, kad šaknys nepuptų.')" class="pt-4 text-brand-800 font-semibold text-sm inline-flex items-center gap-2 group-hover:text-brand-600 transition">
+                            <span>Skaityti išsamiau</span>
+                            <i class="fa-solid fa-arrow-right text-xs"></i>
+                        </button>
+                    </div>
+                </article>
+
+                <article class="bg-white rounded-3xl overflow-hidden shadow-sm border border-brand-200 flex flex-col group hover:shadow-md transition">
+                    <div class="h-64 overflow-hidden relative">
+                        <img src="https://images.unsplash.com/photo-1463936575829-25148e1db1b8?q=80&w=1000&auto=format&fit=crop" alt="Apšvietimas" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                        <span class="absolute top-4 left-4 bg-brand-800 text-cream text-xs font-semibold px-3 py-1 rounded-full">Apšvietimas</span>
+                    </div>
+                    <div class="p-8 space-y-4 flex-grow flex flex-col justify-between">
+                        <div>
+                            <div class="text-xs text-brand-600 font-semibold mb-1"><i class="fa-regular fa-calendar"></i> 2026 m. spalis • 4 min skaitinys</div>
+                            <h2 class="font-serif text-2xl font-bold text-brand-900 mb-3">Šviesos reikšmė namų augalams rudenį ir žiemą</h2>
+                            <p class="text-brand-800/80 text-sm leading-relaxed">Atvėsus orams ir sutrumpėjus dienoms, augalai patiria stresą. Sužinokite, kaip juos perkelti ar pasirūpinti papildomu apšvietimu.</p>
+                        </div>
+                        <button onclick="openTipModal('Apšvietimo gidas rudenį', 'Atėjus rudeniui ir žiemai, saulės šviesos intensyvumas sumažėja net kelis kartus. Daugelis kambarinių augalų (ypač margalapės monstrės ar sukulentai) pradeda nykti.\\n\\n1. Perkelkite arčiau lango: pietinė ar rytinė palangė šiuo periodu taps idealia vieta.\\n2. Nuvalykite dulkes: dulkės ant lapų blokuoja saulės šviesą lyg filtras. Nuvalykite lapus drėgna šluoste kartą per savaitę.\\n3. Papildomas apšvietimas: jei kambaryje tamsu, apsvarstykite galimybę įsigyti specialią LED augalų lempą.')" class="pt-4 text-brand-800 font-semibold text-sm inline-flex items-center gap-2 group-hover:text-brand-600 transition">
+                            <span>Skaityti išsamiau</span>
+                            <i class="fa-solid fa-arrow-right text-xs"></i>
+                        </button>
+                    </div>
+                </article>
+
+                <article class="bg-white rounded-3xl overflow-hidden shadow-sm border border-brand-200 flex flex-col group hover:shadow-md transition">
+                    <div class="h-64 overflow-hidden relative">
+                        <img src="https://images.unsplash.com/photo-1598880940371-c756e015ba29?q=80&w=1000&auto=format&fit=crop" alt="Persodinimas" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                        <span class="absolute top-4 left-4 bg-brand-800 text-cream text-xs font-semibold px-3 py-1 rounded-full">Persodinimas</span>
+                    </div>
+                    <div class="p-8 space-y-4 flex-grow flex flex-col justify-between">
+                        <div>
+                            <div class="text-xs text-brand-600 font-semibold mb-1"><i class="fa-regular fa-calendar"></i> 2026 m. spalis • 6 min skaitinys</div>
+                            <h2 class="font-serif text-2xl font-bold text-brand-900 mb-3">Kada ir kaip teisingai persodinti kambarines gėles?</h2>
+                            <p class="text-brand-800/80 text-sm leading-relaxed">Kaip suprasti, kad augalui per mažas vazonas? Geriausi patarimai renkantis žemės mišinį ir naują vazoną.</p>
+                        </div>
+                        <button onclick="openTipModal('Persodinimo taisyklės', 'Persodinimas yra svarbus žingsnis augalo gyvenime. Jei pastebėjote, kad šaknys lenda pro vazono dugno skylutes arba augalas sustojo augti – laikas persodinti.\\n\\n1. Kada persodinti: geriausias metas yra ankstyvas pavasaris, kai augalas bunda.\\n2. Vazono dydis: naujas vazonas turėtų būti tik 2-4 cm platesnis už buvusįjį. Per didelis vazonas skatina drėgmės kaupimąsi ir šaknų puvimą.\\n3. Žemės kokybė: rinkitės specializuotus substratus (pvz., orchidėjoms, kaktusams ar lapiniams augalams).')" class="pt-4 text-brand-800 font-semibold text-sm inline-flex items-center gap-2 group-hover:text-brand-600 transition">
+                            <span>Skaityti išsamiau</span>
+                            <i class="fa-solid fa-arrow-right text-xs"></i>
+                        </button>
+                    </div>
+                </article>
+
+                <article class="bg-white rounded-3xl overflow-hidden shadow-sm border border-brand-200 flex flex-col group hover:shadow-md transition">
+                    <div class="h-64 overflow-hidden relative">
+                        <img src="https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?q=80&w=1000&auto=format&fit=crop" alt="Tręšimas" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                        <span class="absolute top-4 left-4 bg-brand-800 text-cream text-xs font-semibold px-3 py-1 rounded-full">Tręšimas</span>
+                    </div>
+                    <div class="p-8 space-y-4 flex-grow flex flex-col justify-between">
+                        <div>
+                            <div class="text-xs text-brand-600 font-semibold mb-1"><i class="fa-regular fa-calendar"></i> 2026 m. spalis • 3 min skaitinys</div>
+                            <h2 class="font-serif text-2xl font-bold text-brand-900 mb-3">Augalų tręšimo subtilybės: kada džiaugtis, o kada sustoti?</h2>
+                            <p class="text-brand-800/80 text-sm leading-relaxed">Kodėl žiemą nerekomenduojama tręšti augalų ir kokias trąšas pasirinkti, kad lapai taptų vešlūs bei blizgantys.</p>
+                        </div>
+                        <button onclick="openTipModal('Tręšimo gidas', 'Trąšos suteikia augalui energijos ir maistinių medžiagų, tačiau jas naudoti reikia atsakingai.\\n\\n1. Augimo sezonas: tręškite pavasarį ir vasarą kas 2-3 savaites specialiu skystuoju trąšų mišiniu.\\n2. Ramybės periodas: rudenį ir žiemą tręšimą nutraukite arba sumažinkite iki 1 karto per mėnesį, nes augalai ilsisi.\\n3. Niekada netręškite sausos žemės: prieš tręšiant augalą lengvai palaistykite vandeniu, kad nenudegintumėte šaknų.')" class="pt-4 text-brand-800 font-semibold text-sm inline-flex items-center gap-2 group-hover:text-brand-600 transition">
+                            <span>Skaityti išsamiau</span>
+                            <i class="fa-solid fa-arrow-right text-xs"></i>
+                        </button>
+                    </div>
+                </article>
+            </div>
+        </div>
+
+        <!-- ================= TAB 4: APIE MUS & KONTAKTAI (ABOUT) ================= -->
+        <div id="view-about" class="tab-content hidden animate-fadeIn py-12 px-4 max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center mb-20">
+                <div class="lg:col-span-6 space-y-6">
+                    <span class="text-brand-600 uppercase tracking-widest text-xs font-bold">Mūsų Istorija</span>
+                    <h1 class="text-3xl sm:text-5xl font-serif font-bold text-brand-900">Augustės S. „Gėlių Pasaulis“</h1>
+                    <p class="text-brand-800/80 leading-relaxed">
+                        Esame prabangus gėlių salonas, kurį įkvėpė didelė meilė gamtai, estetikai ir nepriekaištingai kokybei. Kiekvienas augalas mūsų asortimente yra asmeniškai patikrintas ir atrinktas Augustės S., siekiant užtikrinti, kad jūsų namus pasiektų tik pati gyvybingiausia flora.
+                    </p>
+                    <p class="text-brand-800/80 leading-relaxed">
+                        Mes tikime, kad gėlės nėra tik interjero detalis – tai gyva energija, kuri kuria jaukią atmosferą, pakelia nuotaika ir sušildo kiekvieno širdį.
+                    </p>
+                    <div class="grid grid-cols-2 gap-6 pt-4">
+                        <div class="bg-white p-6 rounded-2xl border border-brand-200">
+                            <p class="font-serif text-3xl font-bold text-brand-900">8+ metai</p>
+                            <p class="text-xs text-brand-700 mt-1">Patirtis floristikos ir botanikos srityje</p>
+                        </div>
+                        <div class="bg-white p-6 rounded-2xl border border-brand-200">
+                            <p class="font-serif text-3xl font-bold text-brand-900">3000+</p>
+                            <p class="text-xs text-brand-700 mt-1">Laimingi ir lojalūs klientai</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="lg:col-span-6 relative">
+                    <div class="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-white aspect-[4/3]">
+                        <img src="https://images.unsplash.com/photo-1526047932273-341f2a7631f9?q=80&w=1000&auto=format&fit=crop" alt="Salonas" class="w-full h-full object-cover">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contacts Section -->
+            <div class="bg-white rounded-3xl p-8 sm:p-12 shadow-sm border border-brand-200 grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <div class="space-y-6">
+                    <span class="text-brand-600 uppercase tracking-widest text-xs font-bold">Susisiekite</span>
+                    <h2 class="text-3xl font-serif font-bold text-brand-900">Kur mus rasti ir kaip susisiekti</h2>
+                    <p class="text-brand-800/80 text-sm">Turite klausimų dėl gėlių priežiūros, norite užsisakyti individualią puokštę ar pasitarti? Parašykite mums!</p>
+                    
+                    <div class="space-y-4 pt-2">
+                        <div class="flex items-start space-x-4">
+                            <div class="w-12 h-12 rounded-2xl bg-brand-100 text-brand-800 flex items-center justify-center text-lg flex-shrink-0">
+                                <i class="fa-solid fa-location-dot"></i>
+                            </div>
+                            <div>
+                                <p class="font-bold text-sm text-brand-900">Salono adresas</p>
+                                <p class="text-sm text-brand-800/80">Gėlių g. 12, Vilnius / Užsakymai visoje Lietuvoje</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-4">
+                            <div class="w-12 h-12 rounded-2xl bg-brand-100 text-brand-800 flex items-center justify-center text-lg flex-shrink-0">
+                                <i class="fa-solid fa-phone"></i>
+                            </div>
+                            <div>
+                                <p class="font-bold text-sm text-brand-900">Telefonas</p>
+                                <p class="text-sm text-brand-800/80">+370 600 12345</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-4">
+                            <div class="w-12 h-12 rounded-2xl bg-brand-100 text-brand-800 flex items-center justify-center text-lg flex-shrink-0">
+                                <i class="fa-solid fa-envelope"></i>
+                            </div>
+                            <div>
+                                <p class="font-bold text-sm text-brand-900">El. paštas</p>
+                                <p class="text-sm text-brand-800/80">info@geliupasaulis.lt</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-4">
+                            <div class="w-12 h-12 rounded-2xl bg-brand-100 text-brand-800 flex items-center justify-center text-lg flex-shrink-0">
+                                <i class="fa-solid fa-clock"></i>
+                            </div>
+                            <div>
+                                <p class="font-bold text-sm text-brand-900">Darbo laikas</p>
+                                <p class="text-sm text-brand-800/80">I–V: 09:00 – 19:00 | VI: 10:00 – 16:00</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contact Form -->
+                <div class="bg-cream p-8 rounded-2xl border border-brand-200">
+                    <h3 class="font-serif text-2xl font-bold text-brand-900 mb-6">Parašykite mums žinutę</h3>
+                    <form onsubmit="handleContactSubmit(event)" class="space-y-4">
+                        <div>
+                            <label class="block text-xs font-bold uppercase tracking-wider text-brand-800 mb-1">Jūsų Vardas</label>
+                            <input type="text" required class="w-full px-4 py-3 rounded-xl bg-white border border-brand-200 focus:outline-none focus:border-brand-500 text-sm" placeholder="Vardenis Pavardenis">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold uppercase tracking-wider text-brand-800 mb-1">El. paštas</label>
+                            <input type="email" required class="w-full px-4 py-3 rounded-xl bg-white border border-brand-200 focus:outline-none focus:border-brand-500 text-sm" placeholder="vardenis@pastas.lt">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold uppercase tracking-wider text-brand-800 mb-1">Žinutė</label>
+                            <textarea rows="4" required class="w-full px-4 py-3 rounded-xl bg-white border border-brand-200 focus:outline-none focus:border-brand-500 text-sm" placeholder="Jūsų klausimas ar užsakymo detalės..."></textarea>
+                        </div>
+                        <button type="submit" class="w-full py-3.5 rounded-xl bg-brand-800 text-cream font-semibold hover:bg-brand-700 transition shadow-md">
+                            Siųsti Žinutę
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- DETALUS GĖLĖS MODALAS (DETAILED FLOWER MODAL) -->
+    <div id="flower-modal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden items-center justify-center p-4">
+        <div class="bg-cream rounded-3xl max-w-3xl w-full max-h-[90vh] overflow-y-auto shadow-2xl border border-brand-200 relative animate-fadeIn">
+            <button onclick="closeFlowerModal()" class="absolute top-4 right-4 w-10 h-10 rounded-full bg-brand-100 text-brand-900 flex items-center justify-center hover:bg-brand-200 transition z-10">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+            <div id="modal-content" class="p-6 sm:p-10">
+                <!-- Injected via JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- NAUDINGŲ PATARIMŲ MODALAS (TIP MODAL) -->
+    <div id="tip-modal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden items-center justify-center p-4">
+        <div class="bg-cream rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl border border-brand-200 relative p-8">
+            <button onclick="closeTipModal()" class="absolute top-4 right-4 w-10 h-10 rounded-full bg-brand-100 text-brand-900 flex items-center justify-center hover:bg-brand-200 transition z-10">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+            <div id="tip-modal-content" class="space-y-4">
+                <!-- Injected via JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- KREPŠELIO MODALAS (CART MODAL) -->
+    <div id="cart-modal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden items-center justify-center p-4">
+        <div class="bg-cream rounded-3xl max-w-lg w-full max-h-[90vh] overflow-y-auto shadow-2xl border border-brand-200 relative p-8 flex flex-col justify-between">
+            <div class="flex items-center justify-between pb-4 border-b border-brand-200">
+                <h3 class="font-serif text-2xl font-bold text-brand-900"><i class="fa-solid fa-bag-shopping text-brand-600 mr-2"></i> Jūsų Krepšelis</h3>
+                <button onclick="closeCartModal()" class="w-8 h-8 rounded-full bg-brand-100 text-brand-900 flex items-center justify-center hover:bg-brand-200 transition">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            
+            <div id="cart-items-container" class="py-6 space-y-4 overflow-y-auto max-h-60">
+                <!-- Cart items or empty message -->
+            </div>
+
+            <div class="pt-4 border-t border-brand-200 space-y-4">
+                <div class="flex items-center justify-between text-lg font-bold text-brand-900">
+                    <span>Iš viso:</span>
+                    <span id="cart-total-price">0.00 €</span>
+                </div>
+                <button onclick="checkout()" id="checkout-btn" class="w-full py-3.5 rounded-full bg-brand-800 text-cream font-semibold hover:bg-brand-700 transition shadow-md disabled:opacity-50">
+                    Formuoti Užsakymą
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- PRANEŠIMŲ MODALAS (MESSAGE BOX - REPLACES ALERT) -->
+    <div id="message-modal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden items-center justify-center p-4">
+        <div class="bg-cream rounded-3xl max-w-sm w-full p-8 shadow-2xl border border-brand-200 text-center space-y-4">
+            <div id="message-icon" class="w-16 h-16 rounded-full bg-emerald-100 text-emerald-800 flex items-center justify-center mx-auto text-2xl">
+                <i class="fa-solid fa-check"></i>
+            </div>
+            <h4 id="message-title" class="font-serif text-xl font-bold text-brand-900">Pranešimas</h4>
+            <p id="message-text" class="text-sm text-brand-800/80">Tekstas...</p>
+            <button onclick="closeMessageModal()" class="w-full py-3 rounded-full bg-brand-800 text-cream font-semibold hover:bg-brand-700 transition">
+                Gerai
+            </button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-brand-900 text-cream pt-16 pb-12 mt-20 border-t border-brand-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
+            <div class="space-y-4 md:col-span-1">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 rounded-full bg-cream text-brand-900 flex items-center justify-center font-serif text-xl font-bold">
+                        A
+                    </div>
+                    <div>
+                        <span class="font-serif text-xl font-bold block leading-none">Augustės S.</span>
+                        <span class="text-xs uppercase tracking-widest text-brand-300 font-semibold">Gėlių Pasaulis</span>
+                    </div>
+                </div>
+                <p class="text-xs text-brand-200/80 leading-relaxed">
+                    Elegancija, prabanga ir profesionali priežiūra kiekvienuose namuose. Jūsų patikimas gėlių salonas internete.
+                </p>
+            </div>
+            <div>
+                <h4 class="font-serif font-bold text-lg mb-4 text-brand-200">Greitos nuorodos</h4>
+                <ul class="space-y-2.5 text-sm text-brand-200/80">
+                    <li><button onclick="switchTab('home')" class="hover:text-cream transition">Pradinis</button></li>
+                    <li><button onclick="switchTab('catalog')" class="hover:text-cream transition">Gėlių katalogas</button></li>
+                    <li><button onclick="switchTab('tips')" class="hover:text-cream transition">Patarimai priežiūrai</button></li>
+                    <li><button onclick="switchTab('about')" class="hover:text-cream transition">Apie mus & Kontaktai</button></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-serif font-bold text-lg mb-4 text-brand-200">Kategorijos</h4>
+                <ul class="space-y-2.5 text-sm text-brand-200/80">
+                    <li><button onclick="switchTab('catalog'); filterCategory('kambarinės');" class="hover:text-cream transition">Kambarinės gėlės</button></li>
+                    <li><button onclick="switchTab('catalog'); filterCategory('lauko');" class="hover:text-cream transition">Lauko augalai</button></li>
+                    <li><button onclick="switchTab('catalog'); filterCategory('orchidėjos');" class="hover:text-cream transition">Prabangios orchidėjos</button></li>
+                    <li><button onclick="switchTab('catalog'); filterCategory('dovanų puokštės');" class="hover:text-cream transition">Dovanų puokštės</button></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-serif font-bold text-lg mb-4 text-brand-200">Naujienlaiškis</h4>
+                <p class="text-xs text-brand-200/80 mb-4">Gaukite savaitės gėlių priežiūros patarimus ir specialius pasiūlymus.</p>
+                <form onsubmit="handleNewsletter(event)" class="space-y-2">
+                    <input type="email" required placeholder="Jūsų el. paštas" class="w-full px-4 py-2.5 rounded-xl bg-brand-800 border border-brand-700 text-cream text-sm placeholder-brand-400 focus:outline-none focus:border-brand-400">
+                    <button type="submit" class="w-full py-2.5 rounded-xl bg-brand-300 text-brand-900 font-bold text-sm hover:bg-brand-200 transition">
+                        Prenumeruoti
+                    </button>
+                </form>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 border-t border-brand-800/80 text-center text-xs text-brand-300/60">
+            &copy; 2026 Augustės S. „Gėlių Pasaulis“. Visos teisės saugomos. Sukurta su meilė gamtai.
+        </div>
+    </footer>
+
+    <!-- JavaScript Application Logic -->
+    <script>
+        // Gėlių duomenų bazė su pilnais aprašymais ir priežiūros taisyklėmis
+        const flowers = [
+            {
+                id: 1,
+                name: "Karališkoji Phalaenopsis Orchidėja",
+                category: "orchidėjos",
+                price: 29.99,
+                rating: 5.0,
+                image: "https://images.unsplash.com/photo-1525310072745-f49212b5ac6d?q=80&w=1000&auto=format&fit=crop",
+                shortDesc: "Prabangi, ilgai žydinti orchidėja, suteikianti namams išskirtinės elegancijos.",
+                watering: "Kas 7-10 dienų (kai šaknys tampa pilkšvos).",
+                lighting: "Ryški, bet išsklaidyta šviesa (vengti tiesioginių saulės spindulių).",
+                temperature: "18°C – 24°C (mėgsta šilumą ir šviesą).",
+                care: "Laistykite pamerkiant vazoną į vandenį 15 minučių. Tręškite kas antrą kartą specialiu orchidėjų skystuoju trąšų mišiniu."
+            },
+            {
+                id: 2,
+                name: "Monstera Deliciosa (Karpytalapė)",
+                category: "kambarinės",
+                price: 34.50,
+                rating: 4.9,
+                image: "https://images.unsplash.com/photo-1614594975525-e45190c55d0b?q=80&w=1000&auto=format&fit=crop",
+                shortDesc: "Madingas, didelių karpytų lapų augalas, taptas bet kurio interjero akcentu.",
+                watering: "Kas 7-12 dienų, kai viršutinis žemės sluoksnis (3 cm) visiškai išdžiūsta.",
+                lighting: "Vidutinė arba ryški netiesioginė šviesa.",
+                temperature: "16°C – 25°C.",
+                care: "Reguliaris lapų valymas nuo dulkių drėgna šluoste. Pavasarį ir vasarą rekomenduojama pastatyti ant šviesesnės vietos, o žiemą saugoti nuo skersvėjų."
+            },
+            {
+                id: 3,
+                name: "Prabangi Rožių Puokštė 'Aistra'",
+                category: "dovanų puokštės",
+                price: 49.99,
+                rating: 5.0,
+                image: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=1000&auto=format&fit=crop",
+                shortDesc: "Atrinktos aukščiausios kokybės raudonos rožės, sukurtos ypatingoms progoms.",
+                watering: "Keiskite vandenį ir nupjaukite stiebus įstrižai kas 2 dienas.",
+                lighting: "Laikyti vėsioje vietoje, toliau nuo tiesioginių saulės spindulių ir vaisių dubens.",
+                temperature: "15°C – 20°C.",
+                care: "Į vandenį įberkite komplekte esantį gėlių maistą. Pašalinkite apatinius lapus, kad vanduo ilgiau išliktų skaidrus."
+            },
+            {
+                id: 4,
+                name: "Levandų Kelyje Krūmelis",
+                category: "lauko",
+                price: 14.99,
+                rating: 4.8,
+                image: "https://images.unsplash.com/photo-1528183429752-a97d0bf99b5a?q=80&w=1000&auto=format&fit=crop",
+                shortDesc: "Aromatingas lauko augalas, praturtinantis sodą ar balkoną Provanso dvelksmu.",
+                watering: "Vidutinis laistymas; įsišaknijusios levandos toleruoja sausrą.",
+                lighting: "Mėgsta pilną tiesioginę saulę (bent 6 valandas per dieną).",
+                temperature: "Atsparus lauko sąlygoms ir šalčiams.",
+                care: "Sodinkite į laidžią, lengvą žemę. Po žydėjimo lengvai apkarpykite, kad krūmelis išlaikytų gražią formą."
+            },
+            {
+                id: 5,
+                name: "Spatiphyllum 'Laimės Vėduoklė'",
+                category: "kambarinės",
+                price: 21.00,
+                rating: 4.7,
+                image: "https://images.unsplash.com/photo-1593482834249-f0a18f2f7d87?q=80&w=1000&auto=format&fit=crop",
+                shortDesc: "Elegantiškas augalas su baltais žiedais, efektyviai valantis namų orą.",
+                watering: "Dažnas (nemėgsta perdžiūvimo, lapai greitai nusvyra).",
+                lighting: "Dalinis šešėlis arba šviesi vieta be tiesioginės saulės.",
+                temperature: "18°C – 22°C.",
+                care: "Mėgsta didesnę oro drėgmę, todėl rekomenduojama purkšti lapus vandeniu. Nuvytusius žiedus nupjaukite prie pat pagrindo."
+            },
+            {
+                id: 6,
+                name: "Hortenzija 'Pink Dream'",
+                category: "lauko",
+                price: 24.50,
+                rating: 4.9,
+                image: "https://images.unsplash.com/photo-1508873696983-2df5c920ac2e?q=80&w=1000&auto=format&fit=crop",
+                shortDesc: "Įspūdingi dideli rožiniai žiedynai, puošiantys sodą visą vasarą.",
+                watering: "Gausus laistymas (ypač karštomis vasaros dienomis).",
+                lighting: "Ryškus rytų saulės apšvietimas ir pavėsis per karščius.",
+                temperature: "Lauko sąlygos.",
+                care: "Dirva turi būti nuolat drėgna ir rūgštinė. Žiemai rekomenduojama lengvai apdengti."
+            }
+        ];
+
+        let cart = [];
+        let currentFilter = 'all';
+
+        // Initialize application on load
+        window.onload = function() {
+            renderFeaturedFlowers();
+            renderCatalog(flowers);
+        };
+
+        // Tab Switching Logic
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.getElementById(`view-${tabId}`).classList.remove('hidden');
+
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('text-brand-900', 'border-brand-800');
+                btn.classList.add('text-brand-700/80', 'border-transparent');
+            });
+            const activeBtn = document.getElementById(`nav-${tabId}`);
+            if(activeBtn) {
+                activeBtn.classList.remove('text-brand-700/80', 'border-transparent');
+                activeBtn.classList.add('text-brand-900', 'border-brand-800');
+            }
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Mobile Menu Toggle
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        // Render Featured Flowers on Home
+        function renderFeaturedFlowers() {
+            const grid = document.getElementById('featured-flowers-grid');
+            const featured = flowers.slice(0, 4);
+            grid.innerHTML = featured.map(f => `
+                <div class="bg-white rounded-3xl overflow-hidden shadow-sm border border-brand-200 group flex flex-col justify-between hover:shadow-xl transition duration-300">
+                    <div>
+                        <div class="relative h-64 overflow-hidden bg-brand-100 cursor-pointer" onclick="openFlowerModal(${f.id})">
+                            <img src="${f.image}" alt="${f.name}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" onerror="this.src='https://placehold.co/400x400/f5dcd3/603327?text=Gėlė'">
+                            <span class="absolute top-3 left-3 bg-cream/90 backdrop-blur-md text-brand-900 text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider">${f.category}</span>
+                        </div>
+                        <div class="p-6 space-y-2">
+                            <div class="flex items-center justify-between">
+                                <div class="text-amber-500 text-xs flex items-center gap-1 font-bold">
+                                    <i class="fa-solid fa-star"></i> <span>${f.rating}</span>
+                                </div>
+                                <span class="text-xs text-brand-600 font-semibold uppercase tracking-wide">Švieži</span>
+                            </div>
+                            <h3 onclick="openFlowerModal(${f.id})" class="font-serif text-xl font-bold text-brand-900 hover:text-brand-600 transition cursor-pointer">${f.name}</h3>
+                            <p class="text-brand-800/80 text-xs line-clamp-2">${f.shortDesc}</p>
+                        </div>
+                    </div>
+                    <div class="p-6 pt-0 flex items-center justify-between">
+                        <span class="font-serif text-xl font-bold text-brand-900">${f.price.toFixed(2)} €</span>
+                        <div class="flex gap-2">
+                            <button onclick="openFlowerModal(${f.id})" class="p-2.5 rounded-full bg-brand-100 text-brand-900 hover:bg-brand-200 transition" title="Plačiau">
+                                <i class="fa-solid fa-eye text-xs"></i>
+                            </button>
+                            <button onclick="addToCart(${f.id})" class="px-4 py-2.5 rounded-full bg-brand-800 text-cream text-xs font-semibold hover:bg-brand-700 transition flex items-center gap-1.5 shadow-sm">
+                                <i class="fa-solid fa-plus text-[10px]"></i> Į krepšelį
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Render Catalog Grid
+        function renderCatalog(items) {
+            const grid = document.getElementById('catalog-grid');
+            const emptyState = document.getElementById('empty-state');
+
+            if(items.length === 0) {
+                grid.innerHTML = '';
+                emptyState.classList.remove('hidden');
+                return;
+            }
+
+            emptyState.classList.add('hidden');
+            grid.innerHTML = items.map(f => `
+                <div class="bg-white rounded-3xl overflow-hidden shadow-sm border border-brand-200 group flex flex-col justify-between hover:shadow-xl transition duration-300">
+                    <div>
+                        <div class="relative h-64 overflow-hidden bg-brand-100 cursor-pointer" onclick="openFlowerModal(${f.id})">
+                            <img src="${f.image}" alt="${f.name}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" onerror="this.src='https://placehold.co/400x400/f5dcd3/603327?text=Gėlė'">
+                            <span class="absolute top-3 left-3 bg-cream/90 backdrop-blur-md text-brand-900 text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider">${f.category}</span>
+                        </div>
+                        <div class="p-6 space-y-2">
+                            <div class="flex items-center justify-between">
+                                <div class="text-amber-500 text-xs flex items-center gap-1 font-bold">
+                                    <i class="fa-solid fa-star"></i> <span>${f.rating}</span>
+                                </div>
+                                <span class="text-xs text-brand-600 font-semibold uppercase tracking-wide">Priežiūros gidas</span>
+                            </div>
+                            <h3 onclick="openFlowerModal(${f.id})" class="font-serif text-xl font-bold text-brand-900 hover:text-brand-600 transition cursor-pointer">${f.name}</h3>
+                            <p class="text-brand-800/80 text-xs line-clamp-2">${f.shortDesc}</p>
+                        </div>
+                    </div>
+                    <div class="p-6 pt-0 flex items-center justify-between">
+                        <span class="font-serif text-xl font-bold text-brand-900">${f.price.toFixed(2)} €</span>
+                        <div class="flex gap-2">
+                            <button onclick="openFlowerModal(${f.id})" class="p-2.5 rounded-full bg-brand-100 text-brand-900 hover:bg-brand-200 transition" title="Išsami informacija">
+                                <i class="fa-solid fa-eye text-xs"></i>
+                            </button>
+                            <button onclick="addToCart(${f.id})" class="px-4 py-2.5 rounded-full bg-brand-800 text-cream text-xs font-semibold hover:bg-brand-700 transition flex items-center gap-1.5 shadow-sm">
+                                <i class="fa-solid fa-plus text-[10px]"></i> Į krepšelį
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Filter Category
+        function filterCategory(category) {
+            currentFilter = category;
+            document.querySelectorAll('.cat-btn').forEach(btn => {
+                if(btn.dataset.cat === category) {
+                    btn.classList.remove('bg-brand-100', 'text-brand-800');
+                    btn.classList.add('bg-brand-800', 'text-cream');
+                } else {
+                    btn.classList.remove('bg-brand-800', 'text-cream');
+                    btn.classList.add('bg-brand-100', 'text-brand-800');
+                }
+            });
+
+            const query = document.getElementById('search-input').value.toLowerCase();
+            applyFilterAndSearch(category, query);
+        }
+
+        // Handle Search
+        function handleSearch(query) {
+            applyFilterAndSearch(currentFilter, query.toLowerCase());
+        }
+
+        // Combined Filter & Search helper
+        function applyFilterAndSearch(cat, query) {
+            let filtered = flowers;
+            if(cat !== 'all') {
+                filtered = filtered.filter(f => f.category === cat);
+            }
+            if(query.trim() !== '') {
+                filtered = filtered.filter(f => f.name.toLowerCase().includes(query) || f.shortDesc.toLowerCase().includes(query));
+            }
+            renderCatalog(filtered);
+        }
+
+        // Detailed Flower Modal
+        function openFlowerModal(id) {
+            const flower = flowers.find(f => f.id === id);
+            if(!flower) return;
+
+            const modalContent = document.getElementById('modal-content');
+            modalContent.innerHTML = `
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+                    <div class="rounded-2xl overflow-hidden shadow-md aspect-square bg-brand-100">
+                        <img src="${flower.image}" alt="${flower.name}" class="w-full h-full object-cover">
+                    </div>
+                    <div class="space-y-4">
+                        <span class="inline-block px-3 py-1 rounded-full bg-brand-100 text-brand-800 text-xs font-bold uppercase tracking-wider">${flower.category}</span>
+                        <h2 class="font-serif text-2xl sm:text-3xl font-bold text-brand-900">${flower.name}</h2>
+                        <p class="font-serif text-2xl font-bold text-brand-600">${flower.price.toFixed(2)} €</p>
+                        <p class="text-brand-800/80 text-sm leading-relaxed">${flower.shortDesc}</p>
+                        
+                        <div class="pt-4 border-t border-brand-200 space-y-3">
+                            <h4 class="font-serif font-bold text-brand-900 text-sm uppercase tracking-wide"><i class="fa-solid fa-seedling text-brand-600 mr-2"></i> Priežiūros taisyklės:</h4>
+                            <div class="grid grid-cols-1 gap-2.5 text-xs text-brand-800">
+                                <div class="bg-white p-3 rounded-xl border border-brand-200 flex items-center space-x-3">
+                                    <i class="fa-solid fa-droplet text-blue-500 text-base"></i>
+                                    <div><strong class="block text-brand-900">Laistymas:</strong> ${flower.watering}</div>
+                                </div>
+                                <div class="bg-white p-3 rounded-xl border border-brand-200 flex items-center space-x-3">
+                                    <i class="fa-solid fa-sun text-amber-500 text-base"></i>
+                                    <div><strong class="block text-brand-900">Apšvietimas:</strong> ${flower.lighting}</div>
+                                </div>
+                                <div class="bg-white p-3 rounded-xl border border-brand-200 flex items-center space-x-3">
+                                    <i class="fa-solid fa-temperature-three-quarters text-rose-500 text-base"></i>
+                                    <div><strong class="block text-brand-900">Temperatūra:</strong> ${flower.temperature}</div>
+                                </div>
+                            </div>
+                            <div class="bg-white p-4 rounded-xl border border-brand-200 text-xs text-brand-800 leading-relaxed">
+                                <strong class="block text-brand-900 mb-1"><i class="fa-solid fa-circle-info text-brand-600 mr-1"></i> Papildomi patarimai:</strong>
+                                ${flower.care}
+                            </div>
+                        </div>
+
+                        <button onclick="addToCart(${flower.id}); closeFlowerModal();" class="w-full py-3.5 rounded-full bg-brand-800 text-cream font-semibold hover:bg-brand-700 transition shadow-md flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-bag-shopping"></i> Pridėti į krepšelį
+                        </button>
+                    </div>
+                </div>
+            `;
+            document.getElementById('flower-modal').classList.remove('hidden');
+            document.getElementById('flower-modal').classList.add('flex');
+        }
+
+        function closeFlowerModal() {
+            document.getElementById('flower-modal').classList.add('hidden');
+            document.getElementById('flower-modal').classList.remove('flex');
+        }
+
+        // Tip Modal
+        function openTipModal(title, text) {
+            const content = document.getElementById('tip-modal-content');
+            content.innerHTML = `
+                <h3 class="font-serif text-2xl font-bold text-brand-900">${title}</h3>
+                <div class="space-y-3 text-brand-800/90 text-sm leading-relaxed whitespace-pre-line pt-2">
+                    ${text}
+                </div>
+            `;
+            document.getElementById('tip-modal').classList.remove('hidden');
+            document.getElementById('tip-modal').classList.add('flex');
+        }
+
+        function closeTipModal() {
+            document.getElementById('tip-modal').classList.add('hidden');
+            document.getElementById('tip-modal').classList.remove('flex');
+        }
+
+        // Cart Logic
+        function addToCart(id) {
+            const flower = flowers.find(f => f.id === id);
+            if(!flower) return;
+
+            const existing = cart.find(item => item.id === id);
+            if(existing) {
+                existing.qty += 1;
+            } else {
+                cart.push({ ...flower, qty: 1 });
+            }
+            updateCartBadge();
+            showMessage("Sėkmingai pridėta", `Augalas „${flower.name}“ pridėtas į jūsų krepšelį!`);
+        }
+
+        function updateCartBadge() {
+            const totalQty = cart.reduce((sum, item) => sum + item.qty, 0);
+            document.getElementById('cart-badge').innerText = totalQty;
+        }
+
+        function openCartModal() {
+            renderCartItems();
+            document.getElementById('cart-modal').classList.remove('hidden');
+            document.getElementById('cart-modal').classList.add('flex');
+        }
+
+        function closeCartModal() {
+            document.getElementById('cart-modal').classList.add('hidden');
+            document.getElementById('cart-modal').classList.remove('flex');
+        }
+
+        function renderCartItems() {
+            const container = document.getElementById('cart-items-container');
+            const totalPriceEl = document.getElementById('cart-total-price');
+
+            if(cart.length === 0) {
+                container.innerHTML = `<p class="text-center text-sm text-brand-700 py-8">Jūsų krepšelis tuščias.</p>`;
+                totalPriceEl.innerText = '0.00 €';
+                return;
+            }
+
+            let total = 0;
+            container.innerHTML = cart.map(item => {
+                total += item.price * item.qty;
+                return `
+                    <div class="flex items-center justify-between bg-white p-3.5 rounded-2xl border border-brand-200">
+                        <div class="flex items-center space-x-3">
+                            <img src="${item.image}" class="w-12 h-12 rounded-xl object-cover" onerror="this.src='https://placehold.co/100x100/f5dcd3/603327?text=Gėlė'">
+                            <div>
+                                <h4 class="font-bold text-sm text-brand-900">${item.name}</h4>
+                                <p class="text-xs text-brand-600">${item.price.toFixed(2)} € x ${item.qty}</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <button onclick="changeQty(${item.id}, -1)" class="w-7 h-7 rounded-full bg-brand-100 text-brand-900 flex items-center justify-center hover:bg-brand-200"><i class="fa-solid fa-minus text-xs"></i></button>
+                            <span class="text-sm font-bold text-brand-900">${item.qty}</span>
+                            <button onclick="changeQty(${item.id}, 1)" class="w-7 h-7 rounded-full bg-brand-100 text-brand-900 flex items-center justify-center hover:bg-brand-200"><i class="fa-solid fa-plus text-xs"></i></button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            totalPriceEl.innerText = total.toFixed(2) + ' €';
+        }
+
+        function changeQty(id, delta) {
+            const item = cart.find(i => i.id === id);
+            if(item) {
+                item.qty += delta;
+                if(item.qty <= 0) {
+                    cart = cart.filter(i => i.id !== id);
+                }
+            }
+            updateCartBadge();
+            renderCartItems();
+        }
+
+        function checkout() {
+            if(cart.length === 0) return;
+            cart = [];
+            updateCartBadge();
+            closeCartModal();
+            showMessage("Užsakymas priimtas!", "Ačiū už jūsų užsakymą Augustės S. „Gėlių Pasaulyje“. Su jumis susisieksime dėl pristatymo detalių.");
+        }
+
+        // Custom Message Modal (Alert replacement)
+        function showMessage(title, text) {
+            document.getElementById('message-title').innerText = title;
+            document.getElementById('message-text').innerText = text;
+            document.getElementById('message-modal').classList.remove('hidden');
+            document.getElementById('message-modal').classList.add('flex');
+        }
+
+        function closeMessageModal() {
+            document.getElementById('message-modal').classList.add('hidden');
+            document.getElementById('message-modal').classList.remove('flex');
+        }
+
+        function handleContactSubmit(event) {
+            event.preventDefault();
+            showMessage("Žinutė išsiųsta", "Dėkojame! Augustės S. komanda gavo jūsų žinutę ir atsakys artimiausiu metu.");
+            event.target.reset();
+        }
+
+        function handleNewsletter(event) {
+            event.preventDefault();
+            showMessage("Sėkminga prenumerata", "Sveikiname! Sėkmingai užsiprenumeravote „Gėlių Pasaulio“ naujienlaiškį.");
+            event.target.reset();
+        }
+    </script>
+</body>
+</html>
